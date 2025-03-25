@@ -97,7 +97,7 @@ class Quiz {
 
     return form;
   }
-  
+
   // Helper function to find the element to place the dragged item after
   getDragAfterElement(container, y) {
     const draggableElements = [
@@ -121,14 +121,13 @@ class Quiz {
       { offset: Number.NEGATIVE_INFINITY }
     ).element;
   }
-  
 
   createDragAndDropQuiz(form) {
-    // Створення контейнера для всього drag-and-drop
+    // Create container for the drag-and-drop quiz
     const container = document.createElement("div");
     container.className = "drag-and-drop-container";
 
-    // Ліва частина: зони для початкового розміщення properties
+    // Left zone: initial placement of properties
     const leftZone = document.createElement("div");
     leftZone.className = "left-zone";
 
@@ -142,10 +141,10 @@ class Quiz {
       draggableItem.textContent = option.property;
       draggableItem.dataset.property = option.property;
 
-      // Обробники подій для перетягування
+      // Drag event handlers
       draggableItem.addEventListener("dragstart", (e) => {
         e.dataTransfer.setData("text/plain", option.property);
-        e.dataTransfer.setData("element", draggableItem.outerHTML); // Зберігаємо сам елемент
+        e.dataTransfer.setData("element", draggableItem.outerHTML);
         draggableItem.classList.add("dragging");
       });
 
@@ -157,7 +156,7 @@ class Quiz {
       leftZone.appendChild(propertyZone);
     });
 
-    // Права частина: зони для описів (description)
+    // Right zone: description areas
     const rightZone = document.createElement("div");
     rightZone.className = "right-zone";
 
@@ -167,37 +166,29 @@ class Quiz {
       descriptionZone.textContent = option.description;
       descriptionZone.dataset.description = option.description;
 
-      // Обробники подій для перетягування в ліву і праву зону
       leftZone.addEventListener("dragover", (e) => {
-        e.preventDefault(); // Дозволяємо скидання
+        e.preventDefault();
       });
 
-      leftZone.addEventListener("dragleave", () => {});
-
       leftZone.addEventListener("drop", (e) => {
-        e.preventDefault(); // Запобігаємо стандартному поводженню
-        const property = e.dataTransfer.getData("text/plain"); // Отримуємо властивість, яку переносимо
+        e.preventDefault();
+        const property = e.dataTransfer.getData("text/plain");
 
-        // Знаходимо перетягнутий елемент
         const draggedElement = document.querySelector(
           `[data-property='${property}']`
         );
 
         if (draggedElement) {
-          // Видаляємо перетягнутий елемент з іншої property-zone, якщо він там
           if (draggedElement.closest(".property-zone")) {
             draggedElement.parentNode.removeChild(draggedElement);
           }
 
-          // Знаходимо найближчу property-zone всередині leftZone, куди потрібно помістити елемент
           const targetZone = e.target.closest(".property-zone");
 
           if (targetZone) {
-            // Якщо в зоні вже є елемент, очищаємо її
             if (targetZone.children.length > 0) {
-              targetZone.innerHTML = ""; // Очищаємо старий елемент
+              targetZone.innerHTML = "";
             }
-            // Переміщаємо елемент в targetZone
             targetZone.appendChild(draggedElement);
           }
         }
@@ -206,7 +197,7 @@ class Quiz {
       });
 
       descriptionZone.addEventListener("dragover", (e) => {
-        e.preventDefault(); // Дозволяємо скидання
+        e.preventDefault();
         descriptionZone.classList.add("drag-over");
       });
 
@@ -215,31 +206,24 @@ class Quiz {
       });
 
       descriptionZone.addEventListener("drop", (e) => {
-        e.preventDefault(); // Запобігаємо стандартному поводженню
-        const property = e.dataTransfer.getData("text/plain"); // Отримуємо властивість, яку переносимо
+        e.preventDefault();
+        const property = e.dataTransfer.getData("text/plain");
 
-        // Знаходимо перетягнутий елемент
         const draggedElement = document.querySelector(
           `[data-property='${property}']`
         );
 
-        // Якщо елемент переноситься з лівої зони (left-zone)
         if (draggedElement && draggedElement.closest(".left-zone")) {
-          // Видаляємо перетягнутий елемент з лівої зони
           draggedElement.parentNode.removeChild(draggedElement);
 
-          // Знаходимо найближчу description-zone, куди потрібно помістити елемент
           if (descriptionZone.children.length > 0) {
-            descriptionZone.innerHTML = ""; // Очищаємо старий елемент
+            descriptionZone.innerHTML = "";
           }
 
-          // Додаємо елемент до правої зони
           descriptionZone.appendChild(draggedElement);
         } else if (draggedElement && draggedElement.closest(".right-zone")) {
-          // Якщо елемент переноситься з правої зони (right-zone)
           draggedElement.parentNode.removeChild(draggedElement);
 
-          // Додаємо елемент назад до лівої зони
           const leftZone = document.querySelector(".left-zone");
           leftZone.appendChild(draggedElement);
         }
@@ -250,80 +234,81 @@ class Quiz {
       rightZone.appendChild(descriptionZone);
     });
 
-    // Додавання обох зон у контейнер
+    // Append both zones to the container
     container.appendChild(leftZone);
     container.appendChild(rightZone);
 
-    // Додавання контейнера у форму
+    // Append the container to the form
     form.appendChild(container);
   }
 }
 
+// Quiz data examples
 export const quizzes = [
   new Quiz(
-    "Який із CSS-атрибутів використовується для зміни зовнішніх відступів?",
+    "Which CSS attribute is used to change the outer margins?",
     "radio",
     ["padding", "margin", "border", "outline"],
     "margin"
   ),
   new Quiz(
-    "Оберіть всі властивості, що впливають на блочну модель:",
+    "Select all properties that affect the box model:",
     "checkbox",
     ["margin", "padding", "display", "z-index"],
     ["margin", "padding", "display"]
   ),
   new Quiz(
-    "Яке значення властивості display перетворює елемент у блочний?",
+    "Which display property value turns an element into a block element?",
     "dropdown",
     ["none", "inline", "block", "flex", "grid"],
     "block"
   ),
   new Quiz(
-    "Встановіть відповідність між CSS-властивостями та їх функціями:",
+    "Match the CSS properties with their functions:",
     "drag-and-drop",
     [
-      { property: "margin", description: "Зовнішні відступи" },
-      { property: "padding", description: "Внутрішні відступи" },
-      { property: "border", description: "Рамка" },
+      { property: "margin", description: "Outer margins" },
+      { property: "padding", description: "Inner margins" },
+      { property: "border", description: "Border" },
     ],
     {
-      margin: "Зовнішні відступи",
-      padding: "Внутрішні відступи",
-      border: "Рамка",
+      margin: "Outer margins",
+      padding: "Inner margins",
+      border: "Border",
     }
   ),
   new Quiz(
-    "Опишіть, що таке блочна модель в CSS.",
+    "Describe what the box model in CSS is.",
     "text",
     null,
-    "Блочна модель описує, як елементи HTML рендеряться як прямокутні блоки на веб-сторінці."
+    "The box model describes how HTML elements are rendered as rectangular boxes on a web page."
   ),
   new Quiz(
-    "Властивість display: inline використовується для відображення елементів у рядок.",
+    "The display: inline property is used to display elements in a row.",
     "true/false",
     ["true", "false"],
     "true"
   ),
   new Quiz(
-    "Яке значення властивості box-sizing використовується за замовчуванням?",
+    "Which box-sizing property value is used by default?",
     "dropdown",
     ["none", "content-box", "border-box", "margin-box", "padding-box"],
     "content-box"
   ),
   new Quiz(
-    "Яке значення властивості position використовується для фіксації елемента на екрані, навіть при прокрутці сторінки?",
+    "Which position property value is used to fix an element on the screen, even when scrolling?",
     "radio",
     ["static", "relative", "absolute", "fixed"],
     "fixed"
   ),
   new Quiz(
-    "Оберіть всі можливі значення властивості position:",
+    "Select all possible values of the position property:",
     "checkbox",
     ["static", "relative", "absolute", "fixed", "sticky"],
     ["static", "relative", "absolute", "fixed", "sticky"]
   ),
   new Quiz(
-    "Яка властивість визначає, чи накладаються елементи один на одного, і якщо так, який з них буде зверху?",
+    "Which property determines whether elements overlap each other, and if so, which one appears on top?",
     "dropdown",
     ["none", "z-index", "position", "display", "visibility"],
     "z-index"

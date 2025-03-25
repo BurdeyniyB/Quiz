@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
     form.id = 'surveyForm';
 
     const fields = [
-        { label: 'Ім\'я:', id: 'name', name: 'name', type: 'text' },
-        { label: 'Група:', id: 'group', name: 'group', type: 'text' }
+        { label: 'Name:', id: 'name', name: 'name', type: 'text' },
+        { label: 'Group:', id: 'group', name: 'group', type: 'text' }
     ];
 
     fields.forEach(field => {
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const button = document.createElement('button');
     button.type = 'submit';
-    button.textContent = 'Зберегти';
+    button.textContent = 'Save';
     form.appendChild(button);
     formContainer.appendChild(form);
 
