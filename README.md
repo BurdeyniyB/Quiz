@@ -31,12 +31,13 @@
 
 ## Demo of site
 
-![img1](public/quiz/img1.png)
-![img2](public/quiz/img2.png)
-![img3](public/quiz/img3.png)
-![img4](public/quiz/img4.png)
-![img5](public/quiz/img5.png)
-
+<p align="center">
+  <img src="public/quiz/img1.png" width="600" />
+  <img src="public/quiz/img2.png" width="600" />
+  <img src="public/quiz/img3.png" width="600" />
+  <img src="public/quiz/img4.png" width="600" />
+  <img src="public/quiz/img5.png" width="600" />
+</p>
 ## Usage
 
 Once the server is running, the application can be accessed through your web browser. The homepage will load with the following sections:
