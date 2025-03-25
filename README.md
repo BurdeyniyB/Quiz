@@ -2,6 +2,7 @@
  Develoop quiz with use diferent types of question
 
 - [Installation](#installation)
+- [Demo of site](#demo-of-site)
 - [Usage](#usage)
 - [Technologies](#technologies)
 
@@ -24,9 +25,17 @@
 
 4. Start the server:
    ```bash
-   npm start
+   npm run start
 
 5. The application will be running on http://localhost:3000.
+
+## Demo of site
+
+![img1](public/quiz/img1.png)
+![img2](public/quiz/img2.png)
+![img3](public/quiz/img3.png)
+![img4](public/quiz/img4.png)
+![img5](public/quiz/img5.png)
 
 ## Usage
 
